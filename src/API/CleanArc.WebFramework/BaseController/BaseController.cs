@@ -1,12 +1,17 @@
 ﻿using System.Security.Claims;
 using CleanArc.Application.Models.Common;
+using CleanArc.Infrastructure.Identity.Identity.PermissionManager;
 using CleanArc.SharedKernel.Extensions;
 using CleanArc.WebFramework.Filters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArc.WebFramework.BaseController;
 
+[ApiController]
+[Authorize(ConstantPolicies.DynamicPermission)]
+[Route("api/v{version:apiVersion}/[controller]")]
 public class BaseController : ControllerBase
 {
     protected string UserName => User.Identity?.Name;

@@ -5,7 +5,6 @@ using CleanArc.Application.Features.Users.Queries.GenerateUserToken;
 using CleanArc.Application.Features.Users.Queries.TokenRequest;
 using CleanArc.WebFramework.BaseController;
 using CleanArc.WebFramework.Swagger;
-using CleanArc.WebFramework.WebExtensions;
 using Mediator;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -15,8 +14,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace CleanArc.Web.Api.Controllers.V1.UserManagement;
 
 [ApiVersion("1")]
-[ApiController]
-[Route("api/v{version:apiVersion}/User")]
 public class UserController : BaseController
 {
     private readonly IMediator _mediator;
