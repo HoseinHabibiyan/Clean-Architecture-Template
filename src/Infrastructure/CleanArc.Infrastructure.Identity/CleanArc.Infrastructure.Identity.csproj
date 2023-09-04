@@ -15,8 +15,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\CleanArc.Application\CleanArc.Application.csproj" />
-    <ProjectReference Include="..\..\Core\CleanArc.Domain\CleanArc.Domain.csproj" />
-    <ProjectReference Include="..\CleanArc.Infrastructure.Persistence\CleanArc.Infrastructure.Persistence.csproj" />
   </ItemGroup>
 
 

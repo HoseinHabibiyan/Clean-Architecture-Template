@@ -23,12 +23,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Infrastructure\CleanArc.Infrastructure.Identity\CleanArc.Infrastructure.Identity.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\CleanArc.Infrastructure.Persistence\CleanArc.Infrastructure.Persistence.csproj" />
+    <Folder Include="Setups\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Setups\" />
+    <ProjectReference Include="..\..\Modules\CleanArc.Identity\CleanArc.Identity.csproj" />
+    <ProjectReference Include="..\..\Shared\CleanArc.SharedKernel\CleanArc.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>

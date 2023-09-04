@@ -1,21 +1,15 @@
-﻿using CleanArc.Application.Contracts;
-using CleanArc.Application.Contracts.Identity;
-using CleanArc.Application.Contracts.Persistence;
-using CleanArc.Domain.Entities.User;
-using CleanArc.Infrastructure.Identity.Identity;
-using CleanArc.Infrastructure.Identity.Identity.Dtos;
-using CleanArc.Infrastructure.Identity.Identity.Extensions;
-using CleanArc.Infrastructure.Identity.Identity.Manager;
-using CleanArc.Infrastructure.Identity.Identity.Store;
-using CleanArc.Infrastructure.Identity.Jwt;
-using CleanArc.Infrastructure.Identity.UserManager;
-using CleanArc.Infrastructure.Persistence;
-using CleanArc.Infrastructure.Persistence.Repositories.Common;
+﻿using CleanArc.Identity.Data;
+using CleanArc.Identity.Domain;
+using CleanArc.Identity.Infrastructure.Identity.Manager;
+using CleanArc.Identity.Infrastructure.Identity.Store;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using CleanArc.Identity.Infrastructure.Identity.Extensions;
+using CleanArc.Identity.Infrastructure.Identity.Dtos;
+using CleanArc.Identity.Infrastructure.Jwt;
+using CleanArc.Identity.Infrastructure.UserManager;
 
 namespace CleanArc.Tests.Setup.Setups;
 
@@ -35,9 +29,9 @@ public abstract class TestIdentitySetup
 
         serviceCollection.AddLogging();
 
-        serviceCollection.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connection));
+        serviceCollection.AddDbContext<IdentityDbContext>(options => options.UseSqlite(connection));
 
-        var context = serviceCollection.BuildServiceProvider().GetService<ApplicationDbContext>();
+        var context = serviceCollection.BuildServiceProvider().GetService<IdentityDbContext>();
         context.Database.OpenConnection();
         context.Database.EnsureCreated();
 
@@ -78,7 +72,6 @@ public abstract class TestIdentitySetup
             settings.Encryptkey = "16CharEncryptKey";
         });
 
-        serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
         serviceCollection.AddScoped<IJwtService, JwtService>();
         serviceCollection.AddScoped<IAppUserManager, AppUserManagerImplementation>();
 

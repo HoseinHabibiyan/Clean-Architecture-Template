@@ -1,6 +1,4 @@
-﻿using CleanArc.Application.Features.Users.Queries.GenerateUserToken;
-using CleanArc.Application.Features.Users.Queries.TokenRequest;
-using CleanArc.Web.Plugins.Grpc.ProtoModels;
+﻿using CleanArc.Web.Plugins.Grpc.ProtoModels;
 using Grpc.Core;
 using Mediator;
 

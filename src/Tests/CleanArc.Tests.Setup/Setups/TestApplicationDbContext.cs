@@ -1,5 +1,4 @@
-﻿using CleanArc.Infrastructure.Persistence;
-using Microsoft.Data.Sqlite;
+﻿using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArc.Tests.Setup.Setups;

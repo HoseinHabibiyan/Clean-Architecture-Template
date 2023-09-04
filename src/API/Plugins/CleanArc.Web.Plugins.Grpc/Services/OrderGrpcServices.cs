@@ -1,5 +1,4 @@
-﻿using CleanArc.Application.Features.Order.Queries.GetUserOrders;
-using CleanArc.SharedKernel.Extensions;
+﻿using CleanArc.SharedKernel.Extensions;
 using CleanArc.Web.Plugins.Grpc.ProtoModels;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
@@ -8,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CleanArc.Web.Plugins.Grpc.Services
 {
-    [Authorize]
+	[Authorize]
     public class OrderGrpcServices:OrderServices.OrderServicesBase
     {
        

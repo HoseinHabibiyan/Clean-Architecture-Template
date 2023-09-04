@@ -1,7 +1,6 @@
-﻿using CleanArc.Application.Contracts.Identity;
-using CleanArc.Domain.Entities.User;
-using CleanArc.Infrastructure.Identity.Identity.Dtos;
+﻿using CleanArc.Infrastructure.Identity.Identity.Dtos;
 using CleanArc.Infrastructure.Identity.Identity.Manager;
+using CleanArc.SharedKernel.Contracts.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

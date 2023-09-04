@@ -15,7 +15,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\CleanArc.Application\CleanArc.Application.csproj" />
-    <ProjectReference Include="..\..\Core\CleanArc.Domain\CleanArc.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Repositories\Common\" />
   </ItemGroup>
 
 </Project>

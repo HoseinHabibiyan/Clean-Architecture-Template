@@ -5,6 +5,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 	<ItemGroup>
+		<PackageReference Include="Mapster" Version="7.3.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
 		<PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
 		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.2.0" />
@@ -14,7 +15,7 @@
 		<PackageReference Include="Serilog.Enrichers.Span" Version="3.1.0" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\CleanArc.Infrastructure.Identity\CleanArc.Infrastructure.Identity.csproj" />
-		<ProjectReference Include="..\CleanArc.Infrastructure.Persistence\CleanArc.Infrastructure.Persistence.csproj" />
+	  <ProjectReference Include="..\..\Shared\CleanArc.SharedKernel\CleanArc.SharedKernel.csproj" />
 	</ItemGroup>
+
 </Project>
