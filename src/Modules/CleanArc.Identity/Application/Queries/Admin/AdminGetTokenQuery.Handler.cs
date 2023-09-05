@@ -1,7 +1,8 @@
 ﻿using CleanArc.Application.Models.Common;
 using CleanArc.Application.Models.Jwt;
 using CleanArc.Identity.Infrastructure.Jwt;
-using CleanArc.Identity.Infrastructure.UserManager;
+using CleanArc.SharedKernel.Contracts.Identity;
+using Mapster;
 using Mediator;
 
 namespace CleanArc.Identity.Application.Queries.Admin;
@@ -40,7 +41,7 @@ public class AdminGetTokenQueryHandler : IRequestHandler<AdminGetTokenQuery, Ope
             return OperationResult<AccessToken>.FailureResult("Password is not correct");
         }
 
-        var token = await _jwtService.GenerateAsync(user);
+        var token = await _jwtService.GenerateAsync(user.Adapt<Domain.User>());
 
 
         return OperationResult<AccessToken>.SuccessResult(token);

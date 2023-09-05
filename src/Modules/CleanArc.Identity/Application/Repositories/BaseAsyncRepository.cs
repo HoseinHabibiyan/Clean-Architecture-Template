@@ -1,19 +1,18 @@
 ﻿using System.Linq.Expressions;
 using CleanArc.Identity.Data;
-using CleanArc.WebFramework.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 
 namespace CleanArc.Identity.Application.Repositories;
 
-internal abstract class BaseAsyncRepository<TEntity> where TEntity : class, IEntity
+public abstract class BaseAsyncRepository<TEntity> where TEntity : class, IEntity
 {
-    public readonly IdentityDbContext DbContext;
+    public readonly IdentityAppDbContext DbContext;
     protected DbSet<TEntity> Entities { get; }
     protected virtual IQueryable<TEntity> Table => Entities;
     protected virtual IQueryable<TEntity> TableNoTracking => Entities.AsNoTrackingWithIdentityResolution();
 
-    protected BaseAsyncRepository(IdentityDbContext dbContext)
+    protected BaseAsyncRepository(IdentityAppDbContext dbContext)
     {
         DbContext = dbContext;
         Entities = DbContext.Set<TEntity>(); // City => Cities

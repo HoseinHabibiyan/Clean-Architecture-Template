@@ -1,7 +1,5 @@
 ﻿using System.Reflection;
 using CleanArc.Application.Common;
-using CleanArc.SharedKernel.Extensions;
-using FluentValidation;
 using Mediator;
 using Microsoft.Extensions.DependencyInjection;
 

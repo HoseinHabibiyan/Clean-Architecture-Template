@@ -1,4 +1,6 @@
 ﻿using CleanArc.Application.Models.Common;
+using CleanArc.Order.Data;
+using CleanArc.SharedKernel.Contracts.Identity;
 using Mediator;
 
 namespace CleanArc.Order.Application.Commands;
@@ -8,10 +10,10 @@ internal class AddOrderCommandHandler : IRequestHandler<AddOrderCommand, Operati
 	private readonly IUnitOfWork _unitOfWork;
 	private readonly IAppUserManager _userManager;
 
-	public AddOrderCommandHandler(IUnitOfWork unitOfWork, IAppUserManager userManager)
+	public AddOrderCommandHandler(IAppUserManager userManager, IUnitOfWork unitOfWork)
 	{
-		_unitOfWork = unitOfWork;
 		_userManager = userManager;
+		_unitOfWork = unitOfWork;
 	}
 
 	public async ValueTask<OperationResult<bool>> Handle(AddOrderCommand request, CancellationToken cancellationToken)
@@ -21,7 +23,7 @@ internal class AddOrderCommandHandler : IRequestHandler<AddOrderCommand, Operati
 		if (user == null)
 			return OperationResult<bool>.FailureResult("User Not Found");
 
-		await _unitOfWork.OrderRepository.AddOrderAsync(new Domain.Entities.Order.Order()
+		await _unitOfWork.OrderRepository.AddOrderAsync(new Domain.Order()
 		{ UserId = user.Id, OrderName = request.OrderName });
 
 		await _unitOfWork.CommitAsync();

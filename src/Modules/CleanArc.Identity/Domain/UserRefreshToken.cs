@@ -1,4 +1,5 @@
-﻿using CleanArc.WebFramework.Base;
+﻿
+using CleanArc.Identity.Data;
 
 namespace CleanArc.Identity.Domain;
 

@@ -1,5 +1,5 @@
 ﻿using CleanArc.Application.Models.Common;
-using CleanArc.Identity.Infrastructure.UserManager;
+using CleanArc.SharedKernel.Contracts.Identity;
 using Mediator;
 using Microsoft.Extensions.Logging;
 

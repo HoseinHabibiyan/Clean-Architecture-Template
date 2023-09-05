@@ -1,16 +1,21 @@
 ﻿using CleanArc.Identity.Data;
 using CleanArc.Identity.Domain;
+using CleanArc.SharedKernel.Contracts.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArc.Identity.Application.Repositories;
 
-internal class UserRefreshTokenRepository : BaseAsyncRepository<UserRefreshToken>, IUserRefreshTokenRepository
+public class UserRefreshTokenRepository :  BaseAsyncRepository<UserRefreshToken>, IUserRefreshTokenRepository, IPersistanceProvider
 {
-    public UserRefreshTokenRepository(IdentityDbContext dbContext) : base(dbContext)
+    private readonly IdentityAppDbContext _dbContext;
+	public UserRefreshTokenRepository(IdentityAppDbContext dbContext) : base(dbContext)
     {
+		_dbContext = dbContext;
     }
 
-    public async Task<Guid> CreateToken(int userId)
+	public DbContext PersistanceContext => _dbContext;
+
+	public async Task<Guid> CreateToken(int userId)
     {
         var token = new UserRefreshToken { IsValid = true, UserId = userId };
         await base.AddAsync(token);

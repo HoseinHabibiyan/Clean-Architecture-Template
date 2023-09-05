@@ -1,12 +1,11 @@
 ﻿using System.Linq.Expressions;
 using CleanArc.Order.Data;
-using CleanArc.WebFramework.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 
-namespace CleanArc.Infrastructure.CrossCutting.Persistance;
+namespace CleanArc.Order.Application.Repositories;
 
-internal abstract class BaseAsyncRepository<TEntity> where TEntity : class, IEntity
+public abstract class BaseAsyncRepository<TEntity> where TEntity : class, IEntity
 {
 	public readonly OrderDbContext DbContext;
 	protected DbSet<TEntity> Entities { get; }

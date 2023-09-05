@@ -1,12 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using CleanArc.Application.Models.Identity;
 using CleanArc.Identity.Data;
 using CleanArc.Identity.Domain;
 using CleanArc.Identity.Infrastructure.Identity.Manager;
 using CleanArc.SharedKernel.Contracts.Identity;
+using CleanArc.SharedKernel.Dto.Identity;
 using CleanArc.SharedKernel.Dto.Identity.Models;
+using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,16 +20,16 @@ using Microsoft.Extensions.Logging;
 
 namespace CleanArc.Identity.Infrastructure.Identity.PermissionManager;
 
-internal class RoleManagerService : IRoleManagerService
+public class RoleManagerService : IRoleManagerService
 {
 	private readonly AppRoleManager _roleManger;
 	private readonly IMapper _mapper;
 	private readonly IActionDescriptorCollectionProvider _actionDescriptor;
 	private readonly AppUserManager _userManager;
 	private readonly ILogger<RoleManagerService> _logger;
-	private readonly IdentityDbContext _db;
+	private readonly IdentityAppDbContext _db;
 
-	public RoleManagerService(AppRoleManager roleManger, IMapper mapper, IActionDescriptorCollectionProvider actionDescriptor, AppUserManager userManager, ILogger<RoleManagerService> logger, IdentityDbContext db)
+	public RoleManagerService(AppRoleManager roleManger, IMapper mapper, IActionDescriptorCollectionProvider actionDescriptor, AppUserManager userManager, ILogger<RoleManagerService> logger, IdentityAppDbContext db)
 	{
 		_roleManger = roleManger;
 		_mapper = mapper;
@@ -36,17 +39,17 @@ internal class RoleManagerService : IRoleManagerService
 		_db = db;
 	}
 
-	public async Task<List<GetRolesDto>> GetRolesAsync()
+	public async Task<List<RoleDto>> GetRolesAsync()
 	{
-		var result = await _roleManger.Roles.Where(c => !c.Name.Equals("admin")).Select(r => _mapper.Map<Role, GetRolesDto>(r)).ToListAsync();
+		var result = await _roleManger.Roles.Where(c => !c.Name.Equals("admin")).ProjectToType<RoleDto>().ToListAsync();
 		return result;
 	}
 
-	public async Task<IdentityResult> CreateRoleAsync(CreateRoleDto model)
+	public async Task<IdentityResult> CreateRoleAsync(string roleName)
 	{
 		var role = new Role
 		{
-			Name = model.RoleName,
+			Name = roleName,
 		};
 
 		var result = await _roleManger.CreateAsync(role);
@@ -126,31 +129,32 @@ internal class RoleManagerService : IRoleManagerService
 	{
 		var role = await _roleManger.Roles
 			.Include(x => x.Claims)
+			.ProjectToType<RoleDto>()
 			.SingleOrDefaultAsync(x => x.Id == roleId);
 
 		if (role == null)
 			return null;
 
 		var dynamicActions = await GetPermissionActionsAsync();
-		return new Domain.RolePermission
+		return new RolePermissionDto
 		{
-            Domain.Role = role,
+			Role = role,
 			Actions = dynamicActions
 		};
 	}
 
-	public async Task<bool> ChangeRolePermissionsAsync(EditRolePermissionsDto model)
+	public async Task<bool> ChangeRolePermissionsAsync(int RoleId, List<string> Permissions)
 	{
 		var role = await _roleManger.Roles
 			.Include(x => x.Claims)
-			.SingleOrDefaultAsync(x => x.Id == model.RoleId);
+			.SingleOrDefaultAsync(x => x.Id == RoleId);
 
 		if (role == null)
 		{
 			return false;
 		}
 
-		var selectedPermissions = model.Permissions;
+		var selectedPermissions = Permissions;
 
 		var roleClaims = role.Claims
 			.Where(x => x.ClaimType == ConstantPolicies.DynamicPermission)
@@ -204,8 +208,15 @@ internal class RoleManagerService : IRoleManagerService
 		return false;
 	}
 
-	public async Task<Role> GetRoleByIdAsync(int roleId)
+	public async Task<RoleDto?> GetRoleByIdAsync(int roleId)
 	{
-		return await _roleManger.FindByIdAsync(roleId.ToString());
+		Role? role = await _roleManger.FindByIdAsync(roleId.ToString());
+
+		if (role == null)
+		{
+			return null;
+		}
+
+		return role.Adapt<RoleDto>();
 	}
 }

@@ -1,21 +1,16 @@
 using System.Diagnostics;
 using CleanArc.Application.ServiceConfiguration;
-using CleanArc.Domain.Entities.User;
+using CleanArc.Bootstrapper;
+using CleanArc.Identity.Controllers.V1.UserManagement;
+using CleanArc.Identity.Domain;
+using CleanArc.Identity.Infrastructure.Identity.Dtos;
+using CleanArc.Identity.Infrastructure.Jwt;
 using CleanArc.Infrastructure.CrossCutting.Logging;
-using CleanArc.Infrastructure.Identity.Identity.Dtos;
-using CleanArc.Infrastructure.Identity.Identity.SeedDatabaseService;
-using CleanArc.Infrastructure.Identity.Jwt;
-using CleanArc.Infrastructure.Identity.ServiceConfiguration;
-using CleanArc.Infrastructure.Persistence;
-using CleanArc.Infrastructure.Persistence.ServiceConfiguration;
 using CleanArc.SharedKernel.Extensions;
-using CleanArc.Web.Api.Controllers.V1.UserManagement;
-using CleanArc.Web.Plugins.Grpc;
 using CleanArc.WebFramework.Filters;
 using CleanArc.WebFramework.Middlewares;
 using CleanArc.WebFramework.ServiceConfiguration;
 using CleanArc.WebFramework.Swagger;
-using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -46,17 +41,18 @@ builder.Services.AddControllers(options =>
 
 builder.Services.AddSwagger();
 
-builder.Services.AddApplicationServices()
-    .RegisterIdentityServices(identitySettings)
-    .AddPersistenceServices(configuration)
-    .AddWebFrameworkServices();
+builder.Services
+    .AddApplicationServices()
+    .AddWebFrameworkServices()
+    .AddOrderBootstrapper(configuration)
+	.AddIdentityBootstrapper(configuration, identitySettings);
 
 builder.Services.RegisterValidatorsAsServices();
 
 
 #region Plugin Services Configuration
 
-builder.Services.ConfigureGrpcPluginServices();
+//builder.Services.ConfigureGrpcPluginServices();
 
 #endregion
 
@@ -67,19 +63,19 @@ var app = builder.Build();
 
 #region Seeding and creating database
 
-await using (var scope = app.Services.CreateAsyncScope())
-{
-    var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
+//await using (var scope = app.Services.CreateAsyncScope())
+//{
+//    var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
 
-    if (context is null)
-        throw new Exception("Database Context Not Found");
+//    if (context is null)
+//        throw new Exception("Database Context Not Found");
 
-    await context.Database.MigrateAsync();
+//    await context.Database.MigrateAsync();
 
 
-    var seedService = scope.ServiceProvider.GetRequiredService<ISeedDataBase>();
-    await seedService.Seed();
-}
+//    var seedService = scope.ServiceProvider.GetRequiredService<ISeedDataBase>();
+//    await seedService.Seed();
+//}
 
 #endregion
 
@@ -102,7 +98,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.ConfigureGrpcPipeline();
+//app.ConfigureGrpcPipeline();
 
 await app.RunAsync();
 #endregion

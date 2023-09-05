@@ -1,14 +1,12 @@
 ﻿using System.Reflection;
 using CleanArc.SharedKernel.Extensions;
-using CleanArc.WebFramework.Base;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArc.Order.Data;
 
 public class OrderDbContext : DbContext
 {
-    public OrderDbContext(DbContextOptions options)
-        : base(options)
+    public OrderDbContext(DbContextOptions<OrderDbContext> options): base(options)
     {
         SavingChanges += OnSavingChanges;
     }

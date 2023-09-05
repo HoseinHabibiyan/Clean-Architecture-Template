@@ -1,5 +1,6 @@
 ﻿using CleanArc.Application.Models.Common;
-using CleanArc.Identity.Infrastructure.UserManager;
+using CleanArc.SharedKernel.Contracts.Identity;
+using CleanArc.SharedKernel.Dto.Identity;
 using Mediator;
 using Microsoft.Extensions.Logging;
 
@@ -28,7 +29,7 @@ internal class UserCreateCommandHandler : IRequestHandler<UserCreateCommand, Ope
         if (phoneNumberExist)
             return OperationResult<UserCreateCommandResult>.FailureResult("Username already exists");
 
-        var user = new Domain.User { UserName = request.UserName, Name = request.FirstName, FamilyName = request.LastName, PhoneNumber = request.PhoneNumber };
+        var user = new UserDto { UserName = request.UserName, Name = request.FirstName, FamilyName = request.LastName, PhoneNumber = request.PhoneNumber };
 
         var createResult = await _userManager.CreateUser(user);
 

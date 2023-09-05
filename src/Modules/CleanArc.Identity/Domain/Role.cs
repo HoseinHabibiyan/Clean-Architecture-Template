@@ -1,4 +1,4 @@
-﻿using CleanArc.WebFramework.Base;
+﻿using CleanArc.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 
 namespace CleanArc.Identity.Domain;

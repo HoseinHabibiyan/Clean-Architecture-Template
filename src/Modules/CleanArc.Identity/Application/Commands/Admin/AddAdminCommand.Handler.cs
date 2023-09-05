@@ -1,6 +1,6 @@
 ﻿using CleanArc.Application.Models.Common;
-using CleanArc.Identity.Infrastructure.UserManager;
 using CleanArc.SharedKernel.Contracts.Identity;
+using CleanArc.SharedKernel.Dto.Identity;
 using CleanArc.SharedKernel.Extensions;
 using Mediator;
 
@@ -24,7 +24,7 @@ namespace CleanArc.Identity.Application.Commands.Admin
             if (role is null)
                 return OperationResult<bool>.NotFoundResult("Specified role not found");
 
-            var newAdmin = new Domain.User { UserName = request.UserName, Email = request.Email };
+            var newAdmin = new UserDto { UserName = request.UserName, Email = request.Email };
 
             var adminCreateResult =
                 await _userManager.CreateUserWithPasswordAsync(

@@ -16,8 +16,7 @@ namespace CleanArc.Identity.Application.Commands.Role
 
         public async ValueTask<OperationResult<bool>> Handle(UpdateRoleClaimsCommand request, CancellationToken cancellationToken)
         {
-            var updateRoleResult = await _roleManagerService.ChangeRolePermissionsAsync(new EditRolePermissionsDto()
-            { RoleId = request.RoleId, Permissions = request.RoleClaimValue });
+            var updateRoleResult = await _roleManagerService.ChangeRolePermissionsAsync(request.RoleId, request.RoleClaimValue);
 
             return updateRoleResult
                 ? OperationResult<bool>.SuccessResult(true)

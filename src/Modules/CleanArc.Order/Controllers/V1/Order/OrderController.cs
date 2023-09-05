@@ -30,7 +30,7 @@ public class OrderController : BaseController
 	[HttpGet("GetUserOrders")]
 	public async Task<IActionResult> GetUserOrders()
 	{
-		var query = await _sender.Send(new GetUserOrdersQueryModel(UserId));
+		var query = await _sender.Send(new GetUserOrdersQuery(UserId));
 
 		return OperationResult(query);
 	}

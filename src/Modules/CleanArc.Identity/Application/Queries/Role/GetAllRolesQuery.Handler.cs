@@ -1,5 +1,6 @@
 ﻿using CleanArc.Application.Models.Common;
 using CleanArc.SharedKernel.Contracts.Identity;
+using Mapster;
 using Mediator;
 
 namespace CleanArc.Identity.Application.Queries.Role
@@ -20,7 +21,7 @@ namespace CleanArc.Identity.Application.Queries.Role
             if (!roles.Any())
                 return OperationResult<List<GetAllRolesQueryResponse>>.NotFoundResult("No Roles Found");
 
-            var result = roles.Select(c => new GetAllRolesQueryResponse(int.Parse(c.Id), c.Name)).ToList();
+            var result = roles.Adapt<List<GetAllRolesQueryResponse>>();
 
             return OperationResult<List<GetAllRolesQueryResponse>>.SuccessResult(result);
         }

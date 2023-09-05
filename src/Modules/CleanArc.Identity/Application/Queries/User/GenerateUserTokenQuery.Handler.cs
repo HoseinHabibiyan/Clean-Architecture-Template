@@ -1,8 +1,9 @@
 ﻿using CleanArc.Application.Models.Common;
 using CleanArc.Application.Models.Jwt;
 using CleanArc.Identity.Infrastructure.Jwt;
-using CleanArc.Identity.Infrastructure.UserManager;
+using CleanArc.SharedKernel.Contracts.Identity;
 using CleanArc.SharedKernel.Extensions;
+using Mapster;
 using Mediator;
 
 namespace CleanArc.Identity.Application.Queries.User;
@@ -35,7 +36,7 @@ internal class GenerateUserTokenQueryHandler : IRequestHandler<GenerateUserToken
 
         await _userManager.UpdateUserAsync(user);
 
-        var token = await _jwtService.GenerateAsync(user);
+        var token = await _jwtService.GenerateAsync(user.Adapt<Domain.User>());
 
         return OperationResult<AccessToken>.SuccessResult(token);
     }

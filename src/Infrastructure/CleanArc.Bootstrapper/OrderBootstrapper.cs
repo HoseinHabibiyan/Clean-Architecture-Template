@@ -1,4 +1,6 @@
-﻿using CleanArc.Order.Data;
+﻿using CleanArc.Order.Application.Repositories;
+using CleanArc.Order.Data;
+using CleanArc.SharedKernel.Contracts.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +17,10 @@ public static class OrderBootstrapper
                 .UseSqlServer(configuration.GetConnectionString("SqlServer"));
         });
 
-        return services;
+		services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+		services.AddScoped<IPersistanceProvider, OrderRepository>();
+
+		return services;
     }
 }

@@ -17,7 +17,7 @@ namespace CleanArc.Identity.Application.Commands.Role
         public async ValueTask<OperationResult<bool>> Handle(AddRoleCommand request, CancellationToken cancellationToken)
         {
             var addRoleResult =
-                await _roleManagerService.CreateRoleAsync(new CreateRoleDto() { RoleName = request.RoleName });
+                await _roleManagerService.CreateRoleAsync(request.RoleName);
 
             if (addRoleResult.Succeeded)
                 return OperationResult<bool>.SuccessResult(true);

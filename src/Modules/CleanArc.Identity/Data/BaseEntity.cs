@@ -1,4 +1,4 @@
-﻿namespace CleanArc.WebFramework.Base;
+﻿namespace CleanArc.Identity.Data;
 
 public interface IEntity
 {

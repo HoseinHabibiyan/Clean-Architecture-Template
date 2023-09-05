@@ -20,19 +20,27 @@ using CleanArc.Identity.Infrastructure.Identity.validator;
 using CleanArc.Identity.Infrastructure.Identity.Dtos;
 using CleanArc.Identity.Infrastructure.Identity.Extensions;
 using CleanArc.Application.Models.Identity;
+using CleanArc.Application.Models.ApiResult;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
+using CleanArc.SharedKernel.Extensions;
+using CleanArc.SharedKernel.Contracts.Persistence;
+using CleanArc.Identity.Application.Repositories;
 
 namespace CleanArc.Bootstrapper;
 
 public static class IdentityBootstrapper
 {
-
-	public static IServiceCollection RegisterIdentityServices(this IServiceCollection services, IConfiguration configuration, IdentitySettings identitySettings)
+	public static IServiceCollection AddIdentityBootstrapper(this IServiceCollection services, IConfiguration configuration, IdentitySettings identitySettings)
 	{
-		services.AddDbContextPool<IdentityDbContext>(options =>
+		services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+		services.AddDbContextPool<IdentityAppDbContext>(options =>
 		{
 			options
 				.UseSqlServer(configuration.GetConnectionString("SqlServer"));
 		});
+
 
 		services.AddScoped<IJwtService, JwtService>();
 		services.AddScoped<IAppUserManager, AppUserManagerImplementation>();
@@ -52,6 +60,8 @@ public static class IdentityBootstrapper
 		services.AddScoped<IUserStore<User>, AppUserStore>();
 		services.AddScoped<IRoleManagerService, RoleManagerService>();
 
+
+		#region Identity Configuration
 
 		services.AddIdentity<User, Role>(options =>
 		{
@@ -215,6 +225,10 @@ public static class IdentityBootstrapper
 				}
 			};
 		});
+
+		#endregion
+
+		services.AddScoped<IPersistanceProvider, UserRefreshTokenRepository>();
 
 		return services;
 	}

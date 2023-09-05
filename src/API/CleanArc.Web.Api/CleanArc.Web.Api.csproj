@@ -23,8 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\CleanArc.Bootstrapper\CleanArc.Bootstrapper.csproj" />
     <ProjectReference Include="..\CleanArc.WebFramework\CleanArc.WebFramework.csproj" />
-    <ProjectReference Include="..\Plugins\CleanArc.Web.Plugins.Grpc\CleanArc.Web.Plugins.Grpc.csproj" />
+    <!--<ProjectReference Include="..\Plugins\CleanArc.Web.Plugins.Grpc\CleanArc.Web.Plugins.Grpc.csproj" />-->
   </ItemGroup>
 
   <ItemGroup>

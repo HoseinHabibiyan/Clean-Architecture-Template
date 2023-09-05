@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CleanArc.Application.Models.Common;
-using CleanArc.Identity.Infrastructure.UserManager;
+using CleanArc.SharedKernel.Contracts.Identity;
 using Mediator;
 
 namespace CleanArc.Identity.Application.Commands.User

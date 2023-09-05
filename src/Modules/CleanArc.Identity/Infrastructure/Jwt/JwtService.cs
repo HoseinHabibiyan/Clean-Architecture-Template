@@ -2,9 +2,11 @@
 using System.Security.Claims;
 using System.Text;
 using CleanArc.Application.Models.Jwt;
+using CleanArc.Identity.Data;
 using CleanArc.Identity.Domain;
 using CleanArc.Identity.Infrastructure.Identity.Dtos;
 using CleanArc.Identity.Infrastructure.Identity.Manager;
+using CleanArc.SharedKernel.Contracts.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -17,8 +19,8 @@ public class JwtService : IJwtService
 	private readonly IdentitySettings _siteSetting;
 	private readonly AppUserManager _userManager;
 	private IUserClaimsPrincipalFactory<User> _claimsPrincipal;
+	private readonly IUnitOfWork _unitOfWork;
 
-	private readonly 
 	//private readonly AppUserClaimsPrincipleFactory claimsPrincipleFactory;
 
 	public JwtService(IOptions<IdentitySettings> siteSetting, AppUserManager userManager, IUserClaimsPrincipalFactory<User> claimsPrincipal)

@@ -3,4 +3,4 @@ using Mediator;
 
 namespace CleanArc.Order.Application.Queries.GetAllOrders;
 
-public record GetAllOrdersQuery() : IRequest<OperationResult<List<GetAllOrdersQueryResult>>>;
+public record GetAllOrdersQuery() : IRequest<OperationResult<List<GetAllOrdersQueryResponse>>>;

@@ -1,16 +1,14 @@
 ﻿using System.Reflection;
 using CleanArc.Identity.Domain;
 using CleanArc.SharedKernel.Extensions;
-using CleanArc.WebFramework.Base;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArc.Identity.Data;
 
-public class IdentityDbContext : IdentityDbContext<User, Role, int, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
+public class IdentityAppDbContext : IdentityDbContext<User, Role, int, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
 {
-    public IdentityDbContext(DbContextOptions options)
-        : base(options)
+    public IdentityAppDbContext(DbContextOptions<IdentityAppDbContext> options): base(options)
     {
         SavingChanges += OnSavingChanges;
     }
