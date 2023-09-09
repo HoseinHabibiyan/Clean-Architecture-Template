@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using CleanArc.Application.Common;
+﻿using CleanArc.Application.Common;
 using Mediator;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,9 +15,6 @@ public static class ServiceCollectionExtension
         });
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidateCommandBehavior<,>));
         //services.AddMediator(Assembly.GetExecutingAssembly());
-        services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
-
         return services;
     }
 
