@@ -1,7 +1,7 @@
 ﻿
 syntax = "proto3";
 
-option csharp_namespace = "CleanArc.Web.Plugins.Grpc.ProtoModels";
+option csharp_namespace = "CleanArc.Identity.ProtoModels";
 
 package GrpcUserController;
 

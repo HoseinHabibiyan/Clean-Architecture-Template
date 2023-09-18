@@ -6,11 +6,21 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+	<ItemGroup>
+		<PackageReference Include="Grpc.AspNetCore" Version="2.51.0" />
+		<PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.51.0" />
+	</ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\API\CleanArc.WebFramework\CleanArc.WebFramework.csproj" />
     <ProjectReference Include="..\..\Core\CleanArc.Application\CleanArc.Application.csproj" />
     <ProjectReference Include="..\..\Infrastructure\CleanArc.Infrastructure.CrossCutting\CleanArc.Infrastructure.CrossCutting.csproj" />
     <ProjectReference Include="..\..\Shared\CleanArc.SharedKernel\CleanArc.SharedKernel.csproj" />
   </ItemGroup>
+
+	<ItemGroup>
+		<Protobuf Include="ProtoModels\OrderGrpcServiceModels.proto" GrpcServices="Server" />
+	</ItemGroup>
+
 
 </Project>

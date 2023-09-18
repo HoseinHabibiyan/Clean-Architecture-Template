@@ -1,16 +1,17 @@
-﻿using CleanArc.SharedKernel.Extensions;
-using CleanArc.Web.Plugins.Grpc.ProtoModels;
+﻿using CleanArc.Order.Application.Queries.GetUserOrders;
+using CleanArc.Order.ProtoModels;
+using CleanArc.SharedKernel.Extensions;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Mediator;
 using Microsoft.AspNetCore.Authorization;
 
-namespace CleanArc.Web.Plugins.Grpc.Services
+namespace CleanArc.Order.Application.Services
 {
-	[Authorize]
-    public class OrderGrpcServices:OrderServices.OrderServicesBase
+    [Authorize]
+    public class OrderGrpcServices : OrderServices.OrderServicesBase
     {
-       
+
 
         private readonly ISender _sender;
 
@@ -23,7 +24,7 @@ namespace CleanArc.Web.Plugins.Grpc.Services
         {
             var userId = int.Parse(context.GetHttpContext().User.Identity.GetUserId());
 
-            var query = await _sender.Send(new GetUserOrdersQueryModel(userId));
+            var query = await _sender.Send(new GetUserOrdersQuery(userId));
 
             if (!query.IsSuccess)
             {
@@ -33,11 +34,11 @@ namespace CleanArc.Web.Plugins.Grpc.Services
 
             foreach (var getUsersQueryResultModel in query.Result)
             {
-                    await responseStream.WriteAsync(new GetUserOrdersModel()
-                        { OrderId = getUsersQueryResultModel.OrderId, OrderName = getUsersQueryResultModel.OrderName });
+                await responseStream.WriteAsync(new GetUserOrdersModel()
+                { OrderId = getUsersQueryResultModel.OrderId, OrderName = getUsersQueryResultModel.OrderName });
 
-                    await Task.Delay(400);
-                
+                await Task.Delay(400);
+
             }
 
         }

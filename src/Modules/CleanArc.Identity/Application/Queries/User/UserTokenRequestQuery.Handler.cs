@@ -8,13 +8,11 @@ namespace CleanArc.Identity.Application.Queries.User;
 public class UserTokenRequestQueryHandler : IRequestHandler<UserTokenRequestQuery, OperationResult<UserTokenRequestQueryResponse>>
 {
     private readonly IAppUserManager _userManager;
-    private readonly IMediator _mediator;
     private readonly ILogger<UserTokenRequestQueryHandler> _logger;
 
-    public UserTokenRequestQueryHandler(IAppUserManager userManager, IMediator mediator, ILogger<UserTokenRequestQueryHandler> logger)
+    public UserTokenRequestQueryHandler(IAppUserManager userManager, ILogger<UserTokenRequestQueryHandler> logger)
     {
         _userManager = userManager;
-        _mediator = mediator;
         _logger = logger;
     }
 

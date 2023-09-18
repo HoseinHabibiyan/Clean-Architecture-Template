@@ -1,8 +1,8 @@
-﻿using CleanArc.Web.Plugins.Grpc.ProtoModels;
+﻿using CleanArc.Identity.Application.Queries.User;
+using CleanArc.Identity.ProtoModels;
 using Grpc.Core;
 using Mediator;
-
-namespace CleanArc.Web.Plugins.Grpc.Services;
+namespace CleanArc.Order.Application.Services;
 
 public class UserGrpcServices : UserServices.UserServicesBase
 {
@@ -70,11 +70,14 @@ public class UserGrpcServices : UserServices.UserServicesBase
 
         return new GetUserTokenRequestResult()
         {
-            IsSuccess = true, Message = string.Empty,
+            IsSuccess = true,
+            Message = string.Empty,
             Token = new UserToken()
             {
-                AccessToken = tokenQuery.Result.access_token, ExpiresIn = tokenQuery.Result.expires_in,
-                RefreshToken = tokenQuery.Result.refresh_token, TokenType = tokenQuery.Result.token_type
+                AccessToken = tokenQuery.Result.access_token,
+                ExpiresIn = tokenQuery.Result.expires_in,
+                RefreshToken = tokenQuery.Result.refresh_token,
+                TokenType = tokenQuery.Result.token_type
             }
         };
     }

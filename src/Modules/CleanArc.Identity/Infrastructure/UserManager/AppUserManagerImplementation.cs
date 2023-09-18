@@ -127,8 +127,6 @@ public class AppUserManagerImplementation : IAppUserManager
 
 	public async Task<IdentityResult> IncrementAccessFailedCountAsync(UserDto user)
 	{
-
-
 		return await _userManager.AccessFailedAsync(user.Adapt<User>());
 	}
 

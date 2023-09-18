@@ -1,6 +1,6 @@
 ﻿syntax = "proto3";
 
-option csharp_namespace = "CleanArc.Web.Plugins.Grpc.ProtoModels";
+option csharp_namespace = "CleanArc.Order.ProtoModels";
 import "google/protobuf/empty.proto";
 
 package GrpcOrderController;
