@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Grpc.AspNetCore" Version="2.51.0" />
+		<PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.51.0" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\API\ModularArc.WebFramework\ModularArc.WebFramework.csproj" />
+    <ProjectReference Include="..\..\Core\ModularArc.Application\ModularArc.Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\ModularArc.Infrastructure.CrossCutting\ModularArc.Infrastructure.CrossCutting.csproj" />
+    <ProjectReference Include="..\..\Shared\ModularArc.SharedKernel\ModularArc.SharedKernel.csproj" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<Protobuf Include="ProtoModels\OrderGrpcServiceModels.proto" GrpcServices="Server" />
+	</ItemGroup>
+
+
+</Project>
